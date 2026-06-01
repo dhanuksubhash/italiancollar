@@ -1,0 +1,63 @@
+<section class="testimonials section" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">❤️ Customer Love</div>
+      <h2 id="testimonials-heading">{{ section.settings.title | default: 'What Our Customers Say' }}</h2>
+      <p>{{ section.settings.subtitle | default: 'Real stories from real people who found the perfect gift.' }}</p>
+    </div>
+
+    <div class="testimonials-grid">
+      {%- for block in section.blocks -%}
+        <div class="testimonial-card fade-in" {{ block.shopify_attributes }}>
+          <div class="testimonial-stars" aria-label="{{ block.settings.rating }} stars">
+            {%- for i in (1..5) -%}
+              {%- if i <= block.settings.rating -%}★{%- else -%}☆{%- endif -%}
+            {%- endfor -%}
+          </div>
+          <p class="testimonial-text">{{ block.settings.text | default: 'Amazing gift! Really loved it.' }}</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">{{ block.settings.name | upcase | slice: 0, 1 }}</div>
+            <div>
+              <div class="author-name">{{ block.settings.name | default: 'Customer' }}</div>
+              <div class="author-location">{{ block.settings.location | default: 'India' }}</div>
+              <div class="author-verified">✓ Verified Purchase</div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "What Our Customers Say" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Rating", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Review Text" },
+        { "type": "text", "id": "name", "label": "Customer Name" },
+        { "type": "text", "id": "location", "label": "Location" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Testimonials",
+    "blocks": [
+      { "type": "testimonial", "settings": { "rating": 5, "text": "Ordered a birthday hamper for my mom — the packaging was stunning, and she absolutely loved every item. Delivered right on time! Will definitely order again.", "name": "Priya Sharma", "location": "Mumbai, Maharashtra" }},
+      { "type": "testimonial", "settings": { "rating": 5, "text": "The personalized gift box for our anniversary was perfect. The engraving quality was top-notch and the presentation box was gorgeous. Best gifting experience ever!", "name": "Rahul & Sneha Gupta", "location": "Delhi, NCR" }},
+      { "type": "testimonial", "settings": { "rating": 5, "text": "Ordered 50 corporate gift boxes for Diwali — UrbanGifts handled everything professionally. Excellent quality, timely delivery, and great value for money.", "name": "Arjun Mehta", "location": "Bangalore, Karnataka" }},
+      { "type": "testimonial", "settings": { "rating": 5, "text": "The gift finder tool is amazing! I had no idea what to gift my friend and it suggested the perfect option. The gift arrived beautifully wrapped with a personal note.", "name": "Deepika Nair", "location": "Chennai, Tamil Nadu" }},
+      { "type": "testimonial", "settings": { "rating": 5, "text": "Premium quality products at reasonable prices. The chocolate hamper I ordered was fresh and the packaging was luxurious. My sister was over the moon!", "name": "Ananya Joshi", "location": "Pune, Maharashtra" }},
+      { "type": "testimonial", "settings": { "rating": 5, "text": "Excellent customer service — they even helped me add a last-minute gift message. The experience from start to delivery was seamless and thoughtful.", "name": "Vikram Pillai", "location": "Hyderabad, Telangana" }}
+    ]
+  }]
+}
+{% endschema %}

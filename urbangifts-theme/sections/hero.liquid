@@ -1,0 +1,111 @@
+<section class="hero" aria-label="Hero banner">
+  <!-- Background Shapes -->
+  <div class="hero-bg-shapes" aria-hidden="true">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="hero-shape hero-shape-3"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Left: Content -->
+      <div class="hero-content fade-in">
+        <div class="hero-badge">
+          <span>🎁</span>
+          {{ section.settings.badge_text | default: 'India\'s #1 Gift Destination' }}
+        </div>
+
+        <h1 class="hero-title">
+          {{ section.settings.heading_line1 | default: 'Make Every' }}<br>
+          <em>{{ section.settings.heading_highlight | default: 'Moment Special' }}</em><br>
+          {{ section.settings.heading_line2 | default: 'With Perfect Gifts' }}
+        </h1>
+
+        <p class="hero-desc">
+          {{ section.settings.subheading | default: 'Curated gift boxes, personalized keepsakes & premium hampers for every occasion — delivered across India with love.' }}
+        </p>
+
+        <div class="hero-actions">
+          <a href="{{ section.settings.btn1_url | default: '/collections/all' }}" class="btn btn-primary btn-lg">
+            {{ section.settings.btn1_text | default: 'Shop Gifts' }}
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="{{ section.settings.btn2_url | default: '/pages/gift-finder' }}" class="btn btn-outline btn-lg">
+            {{ section.settings.btn2_text | default: 'Find the Perfect Gift' }}
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">50,000+</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1,200+</div>
+            <div class="stat-label">Unique Gifts</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">4.9★</div>
+            <div class="stat-label">Average Rating</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Image / Illustration -->
+      <div class="hero-image-wrap">
+        {%- if section.settings.hero_image -%}
+          <img
+            class="hero-image-main"
+            src="{{ section.settings.hero_image | image_url: width: 800 }}"
+            alt="{{ section.settings.hero_image.alt | default: 'Gift collection' }}"
+            width="500"
+            height="625"
+            loading="eager"
+          >
+        {%- else -%}
+          <div class="hero-placeholder">
+            🎁
+            <p>Gift Collection</p>
+          </div>
+        {%- endif -%}
+
+        <!-- Floating Cards -->
+        <div class="hero-float-card hero-float-card--1" aria-hidden="true">
+          <div class="float-icon">🚚</div>
+          <div>
+            <div class="float-label">Free Delivery</div>
+            <div class="float-value">Orders above ₹999</div>
+          </div>
+        </div>
+        <div class="hero-float-card hero-float-card--2" aria-hidden="true">
+          <div class="float-icon">⭐</div>
+          <div>
+            <div class="float-label">Rated</div>
+            <div class="float-value">4.9 / 5.0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    { "type": "text", "id": "badge_text", "label": "Badge Text", "default": "India's #1 Gift Destination" },
+    { "type": "text", "id": "heading_line1", "label": "Heading Line 1", "default": "Make Every" },
+    { "type": "text", "id": "heading_highlight", "label": "Heading Highlight (colored)", "default": "Moment Special" },
+    { "type": "text", "id": "heading_line2", "label": "Heading Line 2", "default": "With Perfect Gifts" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "text", "id": "btn1_text", "label": "Button 1 Text", "default": "Shop Gifts" },
+    { "type": "url", "id": "btn1_url", "label": "Button 1 URL" },
+    { "type": "text", "id": "btn2_text", "label": "Button 2 Text", "default": "Find the Perfect Gift" },
+    { "type": "url", "id": "btn2_url", "label": "Button 2 URL" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero Image" }
+  ],
+  "presets": [{ "name": "Hero Banner" }]
+}
+{% endschema %}

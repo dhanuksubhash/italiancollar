@@ -1,0 +1,95 @@
+<header class="site-header" role="banner">
+  <div class="container">
+    <nav class="nav-wrapper" role="navigation" aria-label="Main navigation">
+
+      <!-- Mobile Toggle -->
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Logo -->
+      <div class="site-logo">
+        <a href="/" aria-label="{{ shop.name }} home">
+          {%- if settings.logo -%}
+            <img src="{{ settings.logo | image_url: height: 50 }}" alt="{{ shop.name }}" height="50">
+          {%- else -%}
+            Urban<span>Gifts</span>
+          {%- endif -%}
+        </a>
+      </div>
+
+      <!-- Nav Links -->
+      <ul class="nav-links" role="list">
+        <li class="nav-item">
+          <a href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/all">Shop</a>
+          <div class="nav-dropdown">
+            <a href="/collections/birthday-gifts">Birthday Gifts</a>
+            <a href="/collections/anniversary-gifts">Anniversary Gifts</a>
+            <a href="/collections/wedding-gifts">Wedding Gifts</a>
+            <a href="/collections/corporate-gifts">Corporate Gifts</a>
+            <a href="/collections/festival-gifts">Festival Gifts</a>
+            <a href="/collections/kids-gifts">Kids Gifts</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/gift-boxes">Gift Boxes</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collections/personalized">Personalized</a>
+        </li>
+        <li class="nav-item">
+          <a href="/pages/gift-finder">Gift Finder</a>
+        </li>
+        <li class="nav-item">
+          <a href="/pages/about">About</a>
+        </li>
+      </ul>
+
+      <!-- Search Bar -->
+      <div class="search-bar" role="search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <form action="/search" method="get">
+          <input type="search" name="q" placeholder="Search gifts..." aria-label="Search gifts" autocomplete="off">
+        </form>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        {%- if customer -%}
+          <a href="/account" class="nav-icon-btn" aria-label="My Account">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </a>
+        {%- else -%}
+          <a href="/account/login" class="nav-icon-btn" aria-label="Login">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </a>
+        {%- endif -%}
+
+        <button class="nav-icon-btn" aria-label="Wishlist">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </button>
+
+        <button class="nav-icon-btn" data-open-cart aria-label="Shopping cart">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span class="cart-count" aria-label="Cart items">{{ cart.item_count }}</span>
+        </button>
+      </div>
+
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,119 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "UrbanGifts",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://urbangifts.in",
+    "theme_author": "UrbanGifts"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Color",
+        "default": "#E8603C"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Color",
+        "default": "#F5A623"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent Color",
+        "default": "#2C3E50"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background Color",
+        "default": "#FFF9F5"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text Color",
+        "default": "#2C2C2C"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "playfair_display_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "inter_n4"
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement Bar Text",
+        "default": "Free shipping on orders above ₹999 | Use code URBAN10 for 10% off"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show Announcement Bar",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "text",
+        "id": "footer_tagline",
+        "label": "Footer Tagline",
+        "default": "Gifting made meaningful, one box at a time."
+      },
+      {
+        "type": "text",
+        "id": "footer_email",
+        "label": "Contact Email",
+        "default": "hello@urbangifts.in"
+      },
+      {
+        "type": "text",
+        "id": "footer_phone",
+        "label": "Contact Phone",
+        "default": "+91 98765 43210"
+      },
+      {
+        "type": "text",
+        "id": "instagram_url",
+        "label": "Instagram URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "facebook_url",
+        "label": "Facebook URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "pinterest_url",
+        "label": "Pinterest URL",
+        "default": ""
+      }
+    ]
+  }
+]

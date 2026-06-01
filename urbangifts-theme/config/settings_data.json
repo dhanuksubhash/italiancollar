@@ -1,0 +1,19 @@
+{
+  "current": {
+    "color_primary": "#E8603C",
+    "color_secondary": "#F5A623",
+    "color_accent": "#2C3E50",
+    "color_bg": "#FFF9F5",
+    "color_text": "#2C2C2C",
+    "font_heading": "playfair_display_n4",
+    "font_body": "inter_n4",
+    "announcement_text": "Free shipping on orders above ₹999 | Use code URBAN10 for 10% off",
+    "show_announcement": true,
+    "footer_tagline": "Gifting made meaningful, one box at a time.",
+    "footer_email": "hello@urbangifts.in",
+    "footer_phone": "+91 98765 43210",
+    "instagram_url": "",
+    "facebook_url": "",
+    "pinterest_url": ""
+  }
+}

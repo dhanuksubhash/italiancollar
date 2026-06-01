@@ -1,0 +1,47 @@
+<section class="newsletter section--sm" aria-labelledby="newsletter-heading">
+  <div class="container">
+    <div class="newsletter-inner fade-in">
+      <div class="section-tag">📬 Stay in the Loop</div>
+      <h2 id="newsletter-heading">{{ section.settings.title | default: 'Get Exclusive Gift Ideas & Deals' }}</h2>
+      <p>{{ section.settings.subtitle | default: 'Join 25,000+ subscribers and get weekly gift inspiration, early access to sales & special discount codes.' }}</p>
+
+      {%- form 'customer' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter-form">
+          <input
+            type="email"
+            name="contact[email]"
+            id="newsletter-email"
+            placeholder="{{ section.settings.placeholder | default: 'Enter your email address' }}"
+            required
+            aria-label="Email address for newsletter"
+            autocomplete="email"
+          >
+          <button type="submit" class="btn btn-primary">
+            {{ section.settings.btn_text | default: 'Subscribe' }}
+          </button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p style="color:var(--color-success);margin-top:1rem;font-weight:600;">✓ You're subscribed! Check your inbox for a welcome gift.</p>
+        {%- endif -%}
+      {%- endform -%}
+
+      <p style="font-size:0.8rem;color:#aaa;margin-top:0.8rem;">
+        No spam, ever. Unsubscribe anytime. Your data is safe with us.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Get Exclusive Gift Ideas & Deals" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "text", "id": "placeholder", "label": "Input Placeholder", "default": "Enter your email address" },
+    { "type": "text", "id": "btn_text", "label": "Button Text", "default": "Subscribe" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

@@ -1,0 +1,226 @@
+{%- assign product = product -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<!-- Breadcrumb -->
+<nav class="section--sm" aria-label="Breadcrumb" style="border-bottom:1px solid var(--color-border);">
+  <div class="container">
+    <ol style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:#888;flex-wrap:wrap;">
+      <li><a href="/" style="color:inherit;">Home</a></li>
+      <li aria-hidden="true">›</li>
+      {%- if product.collections.first -%}
+        <li><a href="{{ product.collections.first.url }}" style="color:inherit;">{{ product.collections.first.title }}</a></li>
+        <li aria-hidden="true">›</li>
+      {%- endif -%}
+      <li aria-current="page" style="color:var(--color-text);">{{ product.title | truncate: 40 }}</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="product-page">
+  <div class="container">
+    <div class="product-page-grid">
+
+      <!-- Left: Images -->
+      <div class="product-images">
+        <div class="product-main-img" id="product-main-image">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              id="main-product-img"
+              width="800" height="800"
+              loading="eager"
+            >
+          {%- else -%}
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8rem;">🎁</div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-thumbs" role="list" aria-label="Product images">
+            {%- for image in product.images -%}
+              <button
+                class="product-thumb{% if forloop.first %} active{% endif %}"
+                data-src="{{ image | image_url: width: 800 }}"
+                role="listitem"
+                aria-label="View image {{ forloop.index }}"
+              >
+                <img src="{{ image | image_url: width: 160 }}" alt="" loading="lazy" width="80" height="80">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Right: Info -->
+      <div class="product-info">
+        {%- if product.vendor -%}
+          <p class="product-category" style="margin-bottom:0.5rem;">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1>{{ product.title }}</h1>
+
+        <!-- Rating -->
+        <div class="product-rating" style="margin:0.8rem 0 1.5rem;">
+          <span class="stars">★★★★★</span>
+          <strong>4.9</strong>
+          <span style="color:#888;">({{ product.metafields.reviews.rating_count | default: '128' }} reviews)</span>
+          <span style="color:var(--color-success);font-weight:600;font-size:0.85rem;">✓ In Stock</span>
+        </div>
+
+        <!-- Price -->
+        <div class="price-block">
+          <div class="product-price" style="gap:0.8rem;align-items:baseline;">
+            <span class="price-current" id="product-price">{{ current_variant.price | money }}</span>
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              <span class="price-original">{{ current_variant.compare_at_price | money }}</span>
+              {%- assign savings_pct = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price -%}
+              <span class="product-badge badge-sale" style="position:static;">{{ savings_pct }}% OFF</span>
+            {%- endif -%}
+          </div>
+          <p style="font-size:0.8rem;color:var(--color-success);margin-top:0.3rem;">Inclusive of all taxes. Free gift wrapping included.</p>
+        </div>
+
+        <!-- Product Form -->
+        {%- form 'product', product, id: 'add-to-cart-form', novalidate: true -%}
+          <input type="hidden" name="id" id="variant-id" value="{{ current_variant.id }}">
+
+          <!-- Variants -->
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="variant-section">
+                <p class="variant-label">{{ option.name }}: <strong>{{ option.selected_value }}</strong></p>
+                <div class="variant-options" data-option-index="{{ forloop.index0 }}">
+                  {%- for value in option.values -%}
+                    <button
+                      type="button"
+                      class="variant-btn{% if option.selected_value == value %} active{% endif %}"
+                      data-value="{{ value | escape }}"
+                    >{{ value }}</button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <!-- Quantity -->
+          <div class="qty-row">
+            <div class="qty-wrap" role="group" aria-label="Quantity">
+              <button type="button" class="qty-btn" data-action="minus" aria-label="Decrease quantity">−</button>
+              <input class="qty-input" type="number" name="quantity" id="quantity" value="1" min="1" max="99" aria-label="Quantity">
+              <button type="button" class="qty-btn" data-action="plus" aria-label="Increase quantity">+</button>
+            </div>
+            <p style="font-size:0.85rem;color:#888;">Only {{ current_variant.inventory_quantity | default: 15 }} left in stock</p>
+          </div>
+
+          <!-- Gift Message -->
+          <div class="gift-message-box">
+            <label for="gift-message-toggle">
+              <input type="checkbox" id="gift-message-toggle">
+              🎁 Add a Gift Message (Free)
+            </label>
+            <textarea
+              id="gift-message-text"
+              name="properties[Gift Message]"
+              placeholder="Write your heartfelt message here... (Max 200 characters)"
+              maxlength="200"
+              aria-label="Gift message"
+            ></textarea>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="product-actions">
+            <button
+              type="submit"
+              class="btn btn-primary btn-full btn-lg"
+              {%- unless current_variant.available %} disabled{%- endunless %}
+            >
+              {%- if current_variant.available -%}
+                🛍️ Add to Cart
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+            <a href="/checkout?variant={{ current_variant.id }}&quantity=1" class="btn btn-dark btn-full btn-lg">
+              ⚡ Buy Now
+            </a>
+          </div>
+        {%- endform -%}
+
+        <!-- Perks -->
+        <ul class="product-perks">
+          <li class="product-perk">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Free delivery on orders above ₹999
+          </li>
+          <li class="product-perk">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Premium gift wrapping included
+          </li>
+          <li class="product-perk">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Easy 7-day returns & exchanges
+          </li>
+          <li class="product-perk">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Secure payment — UPI, Cards, Net Banking, COD
+          </li>
+          <li class="product-perk">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Delivery in 2–5 business days pan India
+          </li>
+        </ul>
+
+        <!-- Description Accordion -->
+        <div style="margin-top:2rem;border-top:1px solid var(--color-border);">
+          <details style="padding:1.2rem 0;border-bottom:1px solid var(--color-border);" open>
+            <summary style="cursor:pointer;font-weight:700;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+              Product Description <span>▾</span>
+            </summary>
+            <div style="margin-top:1rem;color:#555;line-height:1.8;font-size:0.95rem;">
+              {{ product.description }}
+            </div>
+          </details>
+          <details style="padding:1.2rem 0;border-bottom:1px solid var(--color-border);">
+            <summary style="cursor:pointer;font-weight:700;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+              Shipping & Delivery <span>▾</span>
+            </summary>
+            <div style="margin-top:1rem;color:#555;line-height:1.8;font-size:0.95rem;">
+              <p>• Standard Delivery: 3–5 business days</p>
+              <p>• Express Delivery: 1–2 business days (available in select cities)</p>
+              <p>• Free shipping on orders above ₹999</p>
+              <p>• Delivered across 19,000+ pin codes in India</p>
+            </div>
+          </details>
+          <details style="padding:1.2rem 0;">
+            <summary style="cursor:pointer;font-weight:700;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+              Returns & Exchanges <span>▾</span>
+            </summary>
+            <div style="margin-top:1rem;color:#555;line-height:1.8;font-size:0.95rem;">
+              <p>• 7-day return policy for damaged or defective items</p>
+              <p>• Personalized items cannot be returned</p>
+              <p>• Contact us within 48 hours of delivery for issues</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    {%- if product.collections.first.products.size > 1 -%}
+      <div class="section" style="border-top:1px solid var(--color-border);">
+        <div class="section-header">
+          <div class="section-tag">You May Also Like</div>
+          <h2>More from {{ product.collections.first.title }}</h2>
+        </div>
+        <div class="products-grid">
+          {%- for related_product in product.collections.first.products limit: 4 -%}
+            {%- unless related_product.id == product.id -%}
+              {% render 'product-card', product: related_product %}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>

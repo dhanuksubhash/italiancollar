@@ -1,0 +1,117 @@
+<div class="section">
+  <div class="container" style="max-width:900px;">
+    <h1 style="margin-bottom:2rem;">Your Shopping Cart</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div style="text-align:center;padding:5rem 1rem;">
+        <div style="font-size:6rem;margin-bottom:1rem;">🛍️</div>
+        <h2 style="margin-bottom:0.8rem;">Your cart is empty</h2>
+        <p style="color:#888;margin-bottom:2rem;">Add some wonderful gifts for your loved ones!</p>
+        <a href="/collections/all" class="btn btn-primary btn-lg">Shop Gifts</a>
+      </div>
+    {%- else -%}
+      {%- form 'cart', cart -%}
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start;">
+          <!-- Cart Items -->
+          <div>
+            {%- for item in cart.items -%}
+              <div style="display:grid;grid-template-columns:100px 1fr auto;gap:1.2rem;padding:1.5rem 0;border-bottom:1px solid var(--color-border);">
+                <a href="{{ item.url }}">
+                  {%- if item.image -%}
+                    <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}" style="width:100px;height:100px;object-fit:cover;border-radius:var(--radius-md);">
+                  {%- else -%}
+                    <div style="width:100px;height:100px;background:var(--color-light-gray);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎁</div>
+                  {%- endif -%}
+                </a>
+                <div>
+                  <h4 style="margin-bottom:0.3rem;"><a href="{{ item.url }}">{{ item.product.title }}</a></h4>
+                  {%- unless item.variant.title == 'Default Title' -%}
+                    <p style="font-size:0.85rem;color:#888;margin-bottom:0.3rem;">{{ item.variant.title }}</p>
+                  {%- endunless -%}
+                  {%- if item.properties.size > 0 -%}
+                    {%- for p in item.properties -%}
+                      {%- unless p.last == blank -%}
+                        <p style="font-size:0.8rem;color:#888;">{{ p.first }}: {{ p.last }}</p>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  <div class="qty-wrap" style="margin-top:0.8rem;display:inline-flex;">
+                    <button type="button" class="qty-btn" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+                    <input class="qty-input" type="number" value="{{ item.quantity }}" min="0" data-key="{{ item.key }}" onchange="updateCartItem('{{ item.key }}', this.value)">
+                    <button type="button" class="qty-btn" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <p style="font-weight:700;font-size:1.1rem;">{{ item.final_line_price | money }}</p>
+                  {%- if item.original_line_price != item.final_line_price -%}
+                    <p style="font-size:0.85rem;color:#aaa;text-decoration:line-through;">{{ item.original_line_price | money }}</p>
+                  {%- endif -%}
+                  <button type="button" onclick="updateCartItem('{{ item.key }}', 0)" style="font-size:0.8rem;color:var(--color-primary);background:none;border:none;cursor:pointer;margin-top:0.5rem;">Remove</button>
+                </div>
+              </div>
+            {%- endfor -%}
+
+            <!-- Cart Note -->
+            <div style="margin-top:1.5rem;">
+              <label for="cart-note" style="font-weight:600;display:block;margin-bottom:0.5rem;">Order Note (Optional)</label>
+              <textarea name="note" id="cart-note" rows="3" style="width:100%;padding:0.75rem;border:1.5px solid var(--color-border);border-radius:var(--radius-md);font-family:inherit;font-size:0.9rem;outline:none;resize:vertical;">{{ cart.note }}</textarea>
+            </div>
+          </div>
+
+          <!-- Summary -->
+          <div style="background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:2rem;position:sticky;top:90px;">
+            <h3 style="margin-bottom:1.5rem;">Order Summary</h3>
+
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.6rem;font-size:0.95rem;">
+              <span>Subtotal ({{ cart.item_count }} items)</span>
+              <span>{{ cart.items_subtotal_price | money }}</span>
+            </div>
+            {%- if cart.total_discount > 0 -%}
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.6rem;font-size:0.95rem;color:var(--color-success);">
+                <span>Discount</span>
+                <span>-{{ cart.total_discount | money }}</span>
+              </div>
+            {%- endif -%}
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.6rem;font-size:0.95rem;color:#888;">
+              <span>Shipping</span>
+              <span>{%- if cart.items_subtotal_price >= 99900 -%}Free{%- else -%}Calculated at checkout{%- endif -%}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:1.15rem;font-weight:800;padding-top:1rem;border-top:1px solid var(--color-border);margin-top:0.5rem;margin-bottom:1.5rem;">
+              <span>Total</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+
+            <!-- Discount Code -->
+            <div style="margin-bottom:1.5rem;">
+              <div style="display:flex;gap:0.5rem;">
+                <input type="text" placeholder="Discount code" style="flex:1;padding:0.65rem 1rem;border:1.5px solid var(--color-border);border-radius:var(--radius-md);font-family:inherit;font-size:0.9rem;outline:none;">
+                <button type="button" class="btn btn-outline btn-sm">Apply</button>
+              </div>
+              <p style="font-size:0.8rem;color:#888;margin-top:0.4rem;">Try: URBAN10 for 10% off</p>
+            </div>
+
+            <a href="/checkout" class="btn btn-primary btn-full btn-lg" style="margin-bottom:0.75rem;">
+              🔒 Secure Checkout
+            </a>
+            <a href="/collections/all" class="btn btn-outline btn-full">Continue Shopping</a>
+
+            <div style="text-align:center;margin-top:1.2rem;">
+              <p style="font-size:0.8rem;color:#aaa;">UPI · Visa · Mastercard · RuPay · NetBanking · COD</p>
+            </div>
+          </div>
+        </div>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+async function updateCartItem(key, quantity) {
+  await fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: key, quantity: parseInt(quantity) })
+  });
+  window.location.reload();
+}
+</script>

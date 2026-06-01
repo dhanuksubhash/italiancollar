@@ -1,0 +1,95 @@
+<section class="featured section" aria-labelledby="featured-heading">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">{{ section.settings.tag | default: 'Trending Now' }}</div>
+      <h2 id="featured-heading">{{ section.settings.title | default: 'Bestselling Gifts' }}</h2>
+      <p>{{ section.settings.subtitle | default: 'Hand-picked favourites loved by thousands of happy customers.' }}</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="product-tabs fade-in" style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <button class="product-tab-btn active" data-tab="all">All Gifts</button>
+      <button class="product-tab-btn" data-tab="birthday">Birthday</button>
+      <button class="product-tab-btn" data-tab="anniversary">Anniversary</button>
+      <button class="product-tab-btn" data-tab="corporate">Corporate</button>
+      <button class="product-tab-btn" data-tab="personalized">Personalized</button>
+    </div>
+
+    <div class="products-grid" id="featured-products-grid">
+      {%- assign featured = section.settings.collection.products | default: collections.all.products -%}
+      {%- assign product_limit = section.settings.products_count | default: 8 -%}
+
+      {%- for product in featured limit: product_limit -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        {%- comment -%} Show placeholder cards if no collection set {%- endcomment -%}
+        {%- for i in (1..8) -%}
+          <article class="product-card fade-in">
+            <div class="product-card__image">
+              <a href="#" class="product-card__image-placeholder" style="font-size:{{ i | times: 0.3 | plus: 3 }}rem;">
+                {%- assign icons = '🎁,🧸,💐,🕯️,🫖,🍫,💎,🎨' | split: ',' -%}
+                {{ icons[i | minus: 1] }}
+              </a>
+              <span class="product-badge badge-new">New</span>
+            </div>
+            <div class="product-card__body">
+              <p class="product-category">Gift Sets</p>
+              <h3 class="product-title"><a href="#">Sample Gift Item {{ i }}</a></h3>
+              <div class="product-rating"><span class="stars">★★★★★</span> <span>4.9</span> <span>({{ i | times: 12 }})</span></div>
+              <div class="product-price">
+                <span class="price-current">₹{{ i | times: 299 }}</span>
+                <span class="price-original">₹{{ i | times: 399 }}</span>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="view-all-wrap fade-in">
+      <a href="{{ section.settings.view_all_url | default: '/collections/all' }}" class="btn btn-outline btn-lg">
+        {{ section.settings.view_all_text | default: 'View All Gifts' }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+.product-tab-btn {
+  padding: 0.55rem 1.3rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-white);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  color: var(--color-text);
+}
+.product-tab-btn.active,
+.product-tab-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    { "type": "text", "id": "tag", "label": "Section Tag", "default": "Trending Now" },
+    { "type": "text", "id": "title", "label": "Section Title", "default": "Bestselling Gifts" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_count", "min": 4, "max": 16, "step": 4, "label": "Number of Products", "default": 8 },
+    { "type": "text", "id": "view_all_text", "label": "View All Button Text", "default": "View All Gifts" },
+    { "type": "url", "id": "view_all_url", "label": "View All URL" }
+  ],
+  "presets": [{ "name": "Featured Products" }]
+}
+{% endschema %}

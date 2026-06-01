@@ -1,0 +1,85 @@
+<section class="gift-finder section" aria-labelledby="gift-finder-heading">
+  <div class="container">
+    <div class="gift-finder-inner">
+      <!-- Left Text -->
+      <div class="gift-finder-text fade-in">
+        <div class="section-tag">✨ Smart Gift Finder</div>
+        <h2 id="gift-finder-heading">{{ section.settings.title | default: 'Not Sure What to Gift?' }}</h2>
+        <p>{{ section.settings.subtitle | default: 'Answer 3 quick questions and we\'ll suggest the perfect gifts for your recipient. Works like magic!' }}</p>
+
+        <ul style="display:flex;flex-direction:column;gap:0.8rem;margin-bottom:2rem;">
+          <li style="display:flex;align-items:center;gap:0.7rem;color:rgba(255,255,255,0.85);font-size:0.95rem;">
+            <span style="background:rgba(255,255,255,0.15);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</span>
+            Tell us who you're gifting for
+          </li>
+          <li style="display:flex;align-items:center;gap:0.7rem;color:rgba(255,255,255,0.85);font-size:0.95rem;">
+            <span style="background:rgba(255,255,255,0.15);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</span>
+            Select the occasion
+          </li>
+          <li style="display:flex;align-items:center;gap:0.7rem;color:rgba(255,255,255,0.85);font-size:0.95rem;">
+            <span style="background:rgba(255,255,255,0.15);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</span>
+            Pick your budget
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: Quiz Card -->
+      <div class="quiz-card fade-in">
+        <!-- Progress -->
+        <div class="quiz-progress" aria-label="Quiz progress">
+          <div class="quiz-progress-dot done"></div>
+          <div class="quiz-progress-dot"></div>
+          <div class="quiz-progress-dot"></div>
+        </div>
+
+        <!-- Step 1: Who -->
+        <div class="quiz-step active" id="quiz-step-1">
+          <p class="quiz-question">Who are you gifting for?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="partner">💕 Partner</button>
+            <button class="quiz-option" data-value="friend">👫 Friend</button>
+            <button class="quiz-option" data-value="parent">👨‍👩‍👧 Parent</button>
+            <button class="quiz-option" data-value="colleague">💼 Colleague</button>
+            <button class="quiz-option" data-value="sibling">👧 Sibling</button>
+            <button class="quiz-option" data-value="child">🧸 Child</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Occasion -->
+        <div class="quiz-step" id="quiz-step-2">
+          <p class="quiz-question">What's the occasion?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="birthday">🎂 Birthday</button>
+            <button class="quiz-option" data-value="anniversary">💍 Anniversary</button>
+            <button class="quiz-option" data-value="wedding">💒 Wedding</button>
+            <button class="quiz-option" data-value="festival">🪔 Festival</button>
+            <button class="quiz-option" data-value="justbecause">💐 Just Because</button>
+            <button class="quiz-option" data-value="graduation">🎓 Graduation</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Budget -->
+        <div class="quiz-step" id="quiz-step-3">
+          <p class="quiz-question">What's your budget?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="under500">Under ₹500</button>
+            <button class="quiz-option" data-value="500-1000">₹500–1,000</button>
+            <button class="quiz-option" data-value="1000-2500">₹1,000–2,500</button>
+            <button class="quiz-option" data-value="over2500">₹2,500+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Finder Quiz",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Not Sure What to Gift?" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
+  ],
+  "presets": [{ "name": "Gift Finder Quiz" }]
+}
+{% endschema %}

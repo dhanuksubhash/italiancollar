@@ -1,0 +1,54 @@
+<section class="occasions section" aria-labelledby="occasions-heading">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Shop by Occasion</div>
+      <h2 id="occasions-heading">{{ section.settings.title | default: 'Gifts for Every Occasion' }}</h2>
+      <p>{{ section.settings.subtitle | default: 'Whatever the celebration, we have the perfect gift waiting for them.' }}</p>
+    </div>
+
+    <div class="occasions-grid">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url | default: '/collections/all' }}" class="occasion-card fade-in" {{ block.shopify_attributes }}>
+          <div class="occasion-icon" aria-hidden="true">{{ block.settings.icon | default: '🎁' }}</div>
+          <div class="occasion-name">{{ block.settings.name | default: 'Occasion' }}</div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Occasions Grid",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Gifts for Every Occasion" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle" }
+  ],
+  "blocks": [
+    {
+      "type": "occasion",
+      "name": "Occasion",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji Icon", "default": "🎂" },
+        { "type": "text", "id": "name", "label": "Occasion Name", "default": "Birthday" },
+        { "type": "url", "id": "url", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Occasions Grid",
+    "blocks": [
+      { "type": "occasion", "settings": { "icon": "🎂", "name": "Birthday", "url": "/collections/birthday-gifts" }},
+      { "type": "occasion", "settings": { "icon": "💍", "name": "Anniversary", "url": "/collections/anniversary-gifts" }},
+      { "type": "occasion", "settings": { "icon": "💒", "name": "Wedding", "url": "/collections/wedding-gifts" }},
+      { "type": "occasion", "settings": { "icon": "🏢", "name": "Corporate", "url": "/collections/corporate-gifts" }},
+      { "type": "occasion", "settings": { "icon": "🪔", "name": "Festival", "url": "/collections/festival-gifts" }},
+      { "type": "occasion", "settings": { "icon": "🧸", "name": "Kids", "url": "/collections/kids-gifts" }},
+      { "type": "occasion", "settings": { "icon": "💝", "name": "Valentine's", "url": "/collections/valentines-gifts" }},
+      { "type": "occasion", "settings": { "icon": "🎓", "name": "Graduation", "url": "/collections/graduation-gifts" }},
+      { "type": "occasion", "settings": { "icon": "👨‍👩‍👧", "name": "Family", "url": "/collections/family-gifts" }},
+      { "type": "occasion", "settings": { "icon": "🏠", "name": "Housewarming", "url": "/collections/housewarming-gifts" }}
+    ]
+  }]
+}
+{% endschema %}

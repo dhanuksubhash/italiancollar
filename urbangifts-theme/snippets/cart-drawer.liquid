@@ -1,0 +1,82 @@
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Shopping cart" aria-hidden="true">
+  <div class="cart-header">
+    <h3>🛍️ Your Cart ({{ cart.item_count }})</h3>
+    <button class="cart-close" aria-label="Close cart">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="cart-items" id="cart-items-container">
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty" style="text-align:center;padding:3rem 1rem;">
+        <div style="font-size:4rem;margin-bottom:1rem;">🎁</div>
+        <h4 style="margin-bottom:0.5rem;">Your cart is empty</h4>
+        <p style="color:#888;margin-bottom:1.5rem;font-size:0.9rem;">Add some wonderful gifts for your loved ones!</p>
+        <a href="/collections/all" class="btn btn-primary">Shop Gifts</a>
+      </div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="cart-item" data-key="{{ item.key }}">
+          <a href="{{ item.url }}">
+            {%- if item.image -%}
+              <img class="cart-item-img" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="80" height="80">
+            {%- else -%}
+              <div class="cart-item-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">🎁</div>
+            {%- endif -%}
+          </a>
+          <div class="cart-item-info">
+            <div class="cart-item-title">{{ item.product.title }}</div>
+            {%- unless item.variant.title == 'Default Title' -%}
+              <div class="cart-item-variant">{{ item.variant.title }}</div>
+            {%- endunless -%}
+            {%- if item.properties.size > 0 -%}
+              {%- for p in item.properties -%}
+                {%- unless p.last == blank -%}
+                  <div class="cart-item-variant">{{ p.first }}: {{ p.last }}</div>
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+            <div class="cart-item-price">{{ item.final_line_price | money }}</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.4rem;">
+              <div class="qty-wrap" style="transform:scale(0.85);transform-origin:left;">
+                <button class="qty-btn" data-action="minus" data-key="{{ item.key }}">−</button>
+                <input class="qty-input" type="number" value="{{ item.quantity }}" min="1" max="99" data-key="{{ item.key }}" style="width:40px;">
+                <button class="qty-btn" data-action="plus" data-key="{{ item.key }}">+</button>
+              </div>
+              <button class="cart-item-remove" data-key="{{ item.key }}" aria-label="Remove {{ item.title }}">Remove</button>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <div class="cart-footer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;font-size:0.9rem;color:#888;">
+        <span>Subtotal</span>
+        <span>{{ cart.items_subtotal_price | money }}</span>
+      </div>
+      {%- if cart.total_discount > 0 -%}
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;font-size:0.9rem;color:var(--color-success);">
+          <span>Discount</span>
+          <span>-{{ cart.total_discount | money }}</span>
+        </div>
+      {%- endif -%}
+      <div class="cart-subtotal">
+        <span>Total</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+      <a href="/checkout" class="btn btn-primary btn-full btn-lg">
+        Proceed to Checkout
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="/cart" class="btn btn-outline btn-full" style="margin-top:0.5rem;">View Cart</a>
+      <p class="cart-note">Taxes and shipping calculated at checkout</p>
+    </div>
+  {%- endif -%}
+</aside>

@@ -1,0 +1,43 @@
+<section class="trust-bar" aria-label="Trust and shipping information">
+  <div class="container">
+    <div class="trust-grid">
+      {%- for block in section.blocks -%}
+        <div class="trust-item fade-in" {{ block.shopify_attributes }}>
+          <div class="trust-icon" aria-hidden="true">{{ block.settings.icon | default: '✓' }}</div>
+          <div>
+            <div class="trust-label">{{ block.settings.label | default: 'Feature' }}</div>
+            <div class="trust-sub">{{ block.settings.sub | default: 'Description' }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust Bar",
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji Icon" },
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "text", "id": "sub", "label": "Subtitle" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Trust Bar",
+    "blocks": [
+      { "type": "trust_item", "settings": { "icon": "🚚", "label": "Free Delivery", "sub": "On orders above ₹999" }},
+      { "type": "trust_item", "settings": { "icon": "🎁", "label": "Gift Wrapping", "sub": "Premium packaging included" }},
+      { "type": "trust_item", "settings": { "icon": "↩️", "label": "Easy Returns", "sub": "7-day hassle-free returns" }},
+      { "type": "trust_item", "settings": { "icon": "🔒", "label": "Secure Payment", "sub": "100% safe & encrypted" }},
+      { "type": "trust_item", "settings": { "icon": "⭐", "label": "4.9★ Rated", "sub": "By 50,000+ customers" }},
+      { "type": "trust_item", "settings": { "icon": "✉️", "label": "Custom Messages", "sub": "Free gift card with every order" }}
+    ]
+  }]
+}
+{% endschema %}

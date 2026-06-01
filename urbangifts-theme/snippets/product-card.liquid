@@ -1,0 +1,87 @@
+{%- comment -%}
+  Renders a product card.
+  Accepts: product, show_vendor, show_rating
+{%- endcomment -%}
+
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+{%- assign on_sale = false -%}
+{%- if first_variant.compare_at_price > first_variant.price -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+
+<article class="product-card fade-in" aria-label="{{ product.title }}">
+  <div class="product-card__image">
+    {%- if product.featured_image -%}
+      <a href="{{ product.url }}">
+        <img
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | escape | default: product.title }}"
+          width="600"
+          height="600"
+          loading="lazy"
+        >
+      </a>
+    {%- else -%}
+      <a href="{{ product.url }}" class="product-card__image-placeholder">🎁</a>
+    {%- endif -%}
+
+    <!-- Badges -->
+    {%- if on_sale -%}
+      <span class="product-badge badge-sale">
+        Save {{ first_variant.compare_at_price | minus: first_variant.price | times: 100 | divided_by: first_variant.compare_at_price }}%
+      </span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="product-badge badge-new">New</span>
+    {%- elsif product.tags contains 'bestseller' -%}
+      <span class="product-badge badge-bestseller">Bestseller</span>
+    {%- endif -%}
+
+    <!-- Wishlist -->
+    <button class="product-wishlist" aria-label="Add to wishlist" data-product-id="{{ product.id }}">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+      </svg>
+    </button>
+
+    <!-- Quick Add -->
+    {%- if product.available -%}
+      <button
+        class="product-quick-add"
+        data-variant-id="{{ first_variant.id }}"
+        aria-label="Quick add {{ product.title }} to cart"
+      >
+        + Add to Cart
+      </button>
+    {%- else -%}
+      <div class="product-quick-add" style="cursor:default;background:rgba(0,0,0,0.5);">Sold Out</div>
+    {%- endif -%}
+  </div>
+
+  <div class="product-card__body">
+    {%- if show_vendor and product.vendor != blank -%}
+      <p class="product-category">{{ product.vendor }}</p>
+    {%- elsif product.collections.first -%}
+      <p class="product-category">{{ product.collections.first.title }}</p>
+    {%- endif -%}
+
+    <h3 class="product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    <!-- Rating (static for demo, replace with metafield) -->
+    <div class="product-rating" aria-label="4.8 out of 5 stars">
+      <span class="stars">★★★★★</span>
+      <span>4.8</span>
+      <span>({{ product.metafields.reviews.rating_count | default: 24 }})</span>
+    </div>
+
+    <div class="product-price">
+      <span class="price-current">{{ first_variant.price | money }}</span>
+      {%- if on_sale -%}
+        <span class="price-original">{{ first_variant.compare_at_price | money }}</span>
+        {%- assign savings = first_variant.compare_at_price | minus: first_variant.price -%}
+        <span class="price-savings">Save {{ savings | money }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,39 @@
+<div class="section">
+  <div class="container" style="max-width:480px;">
+    <div style="background:var(--color-white);border-radius:var(--radius-xl);padding:3rem;box-shadow:var(--shadow-md);border:1px solid var(--color-border);">
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div style="font-size:3rem;margin-bottom:0.5rem;">🎁</div>
+        <h1 style="font-size:1.8rem;">Welcome Back</h1>
+        <p style="color:#888;">Sign in to track your orders and manage your account.</p>
+      </div>
+
+      {%- form 'customer_login' -%}
+        {%- if form.errors -%}
+          <div style="background:rgba(231,76,60,0.08);border:1px solid rgba(231,76,60,0.3);border-radius:var(--radius-md);padding:1rem;margin-bottom:1.5rem;color:var(--color-error);font-size:0.9rem;">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div style="margin-bottom:1.2rem;">
+          <label for="CustomerEmail" style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;">Email Address</label>
+          <input type="email" id="CustomerEmail" name="customer[email]" autocomplete="email" required
+            style="width:100%;padding:0.85rem 1.2rem;border:1.5px solid var(--color-border);border-radius:var(--radius-md);font-family:inherit;font-size:1rem;outline:none;transition:var(--transition);"
+            onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'">
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+            <label for="CustomerPassword" style="font-weight:600;font-size:0.9rem;">Password</label>
+            <a href="/account/forgot_password" style="font-size:0.85rem;color:var(--color-primary);">Forgot password?</a>
+          </div>
+          <input type="password" id="CustomerPassword" name="customer[password]" autocomplete="current-password" required
+            style="width:100%;padding:0.85rem 1.2rem;border:1.5px solid var(--color-border);border-radius:var(--radius-md);font-family:inherit;font-size:1rem;outline:none;transition:var(--transition);"
+            onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-bottom:1rem;">Sign In</button>
+        <a href="/account/register" class="btn btn-outline btn-full">Create Account</a>
+      {%- endform -%}
+    </div>
+  </div>
+</div>

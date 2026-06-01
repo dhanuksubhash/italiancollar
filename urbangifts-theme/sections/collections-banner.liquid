@@ -1,0 +1,72 @@
+<section class="collections-banner section" aria-labelledby="collections-heading">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Shop by Category</div>
+      <h2 id="collections-heading">{{ section.settings.title | default: 'Explore Our Collections' }}</h2>
+    </div>
+
+    <div class="collections-grid fade-in">
+      {%- for block in section.blocks -%}
+        {%- assign is_large = forloop.first -%}
+        <a
+          href="{{ block.settings.url | default: '/collections/all' }}"
+          class="collection-card{% if is_large %} collection-card--large{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image -%}
+            <img
+              class="collection-card__img"
+              src="{{ block.settings.image | image_url: width: 800 }}"
+              alt="{{ block.settings.title }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            <div class="collection-card__placeholder col-color-{{ forloop.index }}">
+              {{ block.settings.icon | default: '🎁' }}
+            </div>
+          {%- endif -%}
+          <div class="collection-overlay">
+            <h3 class="collection-title">{{ block.settings.title | default: 'Collection' }}</h3>
+            <p class="collection-count">{{ block.settings.product_count | default: '50+' }} products</p>
+            <span class="collection-link">
+              Shop Now
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections Banner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Explore Our Collections" }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection Item",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "icon", "label": "Fallback Emoji", "default": "🎁" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Gift Collection" },
+        { "type": "text", "id": "product_count", "label": "Product Count Text", "default": "50+" },
+        { "type": "url", "id": "url", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Collections Banner",
+    "blocks": [
+      { "type": "collection_item", "settings": { "icon": "🎁", "title": "Premium Gift Boxes", "product_count": "120+", "url": "/collections/gift-boxes" }},
+      { "type": "collection_item", "settings": { "icon": "✉️", "title": "Personalized Gifts", "product_count": "85+", "url": "/collections/personalized" }},
+      { "type": "collection_item", "settings": { "icon": "🏢", "title": "Corporate Gifting", "product_count": "60+", "url": "/collections/corporate-gifts" }}
+    ]
+  }]
+}
+{% endschema %}

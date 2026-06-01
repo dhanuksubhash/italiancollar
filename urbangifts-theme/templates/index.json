@@ -1,0 +1,97 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "badge_text": "India's #1 Gift Destination 🎁",
+        "heading_line1": "Make Every",
+        "heading_highlight": "Moment Special",
+        "heading_line2": "With Perfect Gifts",
+        "subheading": "Curated gift boxes, personalized keepsakes & premium hampers for every occasion — delivered across India with love.",
+        "btn1_text": "Shop Gifts",
+        "btn2_text": "Find the Perfect Gift"
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "b1": { "type": "trust_item", "settings": { "icon": "🚚", "label": "Free Delivery", "sub": "On orders above ₹999" }},
+        "b2": { "type": "trust_item", "settings": { "icon": "🎁", "label": "Gift Wrapping", "sub": "Premium packaging included" }},
+        "b3": { "type": "trust_item", "settings": { "icon": "↩️", "label": "Easy Returns", "sub": "7-day hassle-free returns" }},
+        "b4": { "type": "trust_item", "settings": { "icon": "🔒", "label": "Secure Payment", "sub": "100% safe & encrypted" }},
+        "b5": { "type": "trust_item", "settings": { "icon": "⭐", "label": "4.9★ Rated", "sub": "By 50,000+ customers" }},
+        "b6": { "type": "trust_item", "settings": { "icon": "✉️", "label": "Free Gift Card", "sub": "With every order" }}
+      },
+      "blocks_order": ["b1","b2","b3","b4","b5","b6"]
+    },
+    "occasions": {
+      "type": "occasions",
+      "settings": {
+        "title": "Gifts for Every Occasion",
+        "subtitle": "Whatever the celebration, we have the perfect gift waiting for them."
+      },
+      "blocks": {
+        "o1": { "type": "occasion", "settings": { "icon": "🎂", "name": "Birthday", "url": "/collections/birthday-gifts" }},
+        "o2": { "type": "occasion", "settings": { "icon": "💍", "name": "Anniversary", "url": "/collections/anniversary-gifts" }},
+        "o3": { "type": "occasion", "settings": { "icon": "💒", "name": "Wedding", "url": "/collections/wedding-gifts" }},
+        "o4": { "type": "occasion", "settings": { "icon": "🏢", "name": "Corporate", "url": "/collections/corporate-gifts" }},
+        "o5": { "type": "occasion", "settings": { "icon": "🪔", "name": "Festival", "url": "/collections/festival-gifts" }},
+        "o6": { "type": "occasion", "settings": { "icon": "🧸", "name": "Kids", "url": "/collections/kids-gifts" }},
+        "o7": { "type": "occasion", "settings": { "icon": "💝", "name": "Valentine's", "url": "/collections/valentines-gifts" }},
+        "o8": { "type": "occasion", "settings": { "icon": "🎓", "name": "Graduation", "url": "/collections/graduation-gifts" }},
+        "o9": { "type": "occasion", "settings": { "icon": "👨‍👩‍👧", "name": "Family", "url": "/collections/family-gifts" }},
+        "o10": { "type": "occasion", "settings": { "icon": "🏠", "name": "Housewarming", "url": "/collections/housewarming-gifts" }}
+      },
+      "blocks_order": ["o1","o2","o3","o4","o5","o6","o7","o8","o9","o10"]
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "tag": "Trending Now",
+        "title": "Bestselling Gifts",
+        "subtitle": "Hand-picked favourites loved by thousands of happy customers.",
+        "products_count": 8,
+        "view_all_text": "View All Gifts",
+        "view_all_url": "/collections/all"
+      }
+    },
+    "collections": {
+      "type": "collections-banner",
+      "settings": { "title": "Explore Our Collections" },
+      "blocks": {
+        "c1": { "type": "collection_item", "settings": { "icon": "🎁", "title": "Premium Gift Boxes", "product_count": "120+", "url": "/collections/gift-boxes" }},
+        "c2": { "type": "collection_item", "settings": { "icon": "✉️", "title": "Personalized Gifts", "product_count": "85+", "url": "/collections/personalized" }},
+        "c3": { "type": "collection_item", "settings": { "icon": "🏢", "title": "Corporate Gifting", "product_count": "60+", "url": "/collections/corporate-gifts" }}
+      },
+      "blocks_order": ["c1","c2","c3"]
+    },
+    "gift_finder": {
+      "type": "gift-finder",
+      "settings": {
+        "title": "Not Sure What to Gift?",
+        "subtitle": "Answer 3 quick questions and we'll suggest the perfect gifts. Works like magic!"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "title": "What Our Customers Say",
+        "subtitle": "Real stories from real people who found the perfect gift."
+      },
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "rating": 5, "text": "Ordered a birthday hamper for my mom — the packaging was stunning and she loved every item. Delivered right on time!", "name": "Priya Sharma", "location": "Mumbai" }},
+        "t2": { "type": "testimonial", "settings": { "rating": 5, "text": "The personalized gift box for our anniversary was perfect. Best gifting experience ever!", "name": "Rahul & Sneha Gupta", "location": "Delhi" }},
+        "t3": { "type": "testimonial", "settings": { "rating": 5, "text": "Ordered 50 corporate gift boxes for Diwali — UrbanGifts handled everything professionally.", "name": "Arjun Mehta", "location": "Bangalore" }}
+      },
+      "blocks_order": ["t1","t2","t3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "title": "Get Exclusive Gift Ideas & Deals",
+        "subtitle": "Join 25,000+ subscribers and get weekly gift inspiration and discount codes."
+      }
+    }
+  },
+  "order": ["hero","trust","occasions","featured","collections","gift_finder","testimonials","newsletter"]
+}
